@@ -4,11 +4,9 @@
 #email_three = open("email_three.txt", "r").read()
 #email_four = open("email_four.txt", "r").read()
 
-#=====Censor "learning algorithms" from email_one.txt======
-
-#Things to watch out for:
-# - When censor_txt is more than one word, the program will need to be able to skip past accurances of individual the words in censor_txt.
-# - Program needs to work on words that have puntuation at the end
+#====To do:====
+#Create functionality that can censor all words from a list.
+#proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
 
 class Email:
 #.__init__ opens text file using self.file variable
