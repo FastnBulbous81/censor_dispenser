@@ -4,8 +4,11 @@
 #email_three = open("email_three.txt", "r").read()
 #email_four = open("email_four.txt", "r").read()
 
-#Censor "learning algorithms" from email_one.txt
+#=====Censor "learning algorithms" from email_one.txt======
 
+#Things to watch out for:
+# - When censor_txt is more than one word, the program will need to be able to skip past accurances of individual the words in censor_txt.
+# - Program needs to work on words that have puntuation at the end
 
 class Email:
 #.__init__ opens text file using self.file variable
@@ -17,8 +20,7 @@ class Email:
     def to_list(self):
         to_split = ""
         to_split += self.email
-        splitted = to_split.split()
-        return splitted
+        return to_split.split()
 
 class Censor:
 #.init takes string variable of words to censor and splits into list
@@ -33,9 +35,9 @@ class Censor:
             indexs = []
             for i in range(len(email)):
                 if email[i] == self.censor_txt[0]:
-                    indexs.append(i)
+                    indexs.update(range(len(self.censor_txt)))
             print(indexs)
-            word_count = 0
+            break
 
 
 
