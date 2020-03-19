@@ -16,32 +16,16 @@ class Email:
         self.file = file
         self.email = open(self.file, "r").read()
 
-#splits email into list with each word as an element
-    def to_list(self):
-        to_split = ""
-        to_split += self.email
-        return to_split.split()
-
 class Censor:
-#.init takes string variable of words to censor and splits into list
-    def __init__(self, censor_txt):
-        self.censor_txt = censor_txt.split()
-
-#Counts number of consecutive words to censor and iterates through list to get indexs of text to censor
+    def __init__(self):
+        
     def to_censor(self, email):
         self.email = email
-        word_count = len(self.censor_txt)
-        while word_count > 0:
-            indexs = []
-            for i in range(len(email)):
-                if email[i] == self.censor_txt[0]:
-                    indexs.update(range(len(self.censor_txt)))
-            print(indexs)
-            break
+
 
 
 
 email_one = Email("email_one.txt")
 
 censor_txt1 = Censor("learning algorithms")
-censor_txt1.to_censor(email_one.to_list())
+censor_txt1.to_censor(email_one)
