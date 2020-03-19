@@ -15,17 +15,22 @@ class Email:
     def __init__(self, file):
         self.file = file
         self.email = open(self.file, "r").read()
+# method makes string from email available
+    def to_string(self):
+        email_string = ""
+        email_string += self.email
+        return email_string
 
 class Censor:
-    def __init__(self):
-        
+    def __init__(self, censor_txt):
+        self.censor_txt = censor_txt
+
     def to_censor(self, email):
-        self.email = email
-
-
+        censor_string = email.to_string()
+        print(censor_string.replace(self.censor_txt, "**********"))
 
 
 email_one = Email("email_one.txt")
-
 censor_txt1 = Censor("learning algorithms")
+
 censor_txt1.to_censor(email_one)
