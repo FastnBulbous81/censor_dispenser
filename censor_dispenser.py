@@ -21,18 +21,25 @@ class Email:
         return splitted
 
 class Censor:
-#.init takes string variable of words to censor and splits into list and counts the number of words to censor
+#.init takes string variable of words to censor and splits into list
     def __init__(self, censor_txt):
-        word_count = 0
         self.censor_txt = censor_txt.split()
-        word_count += len(self.censor_txt)
 
-#Iterates through list for text to censor
-    def to_censor(self):
-        pass
+#Counts number of consecutive words to censor and iterates through list to get indexs of text to censor
+    def to_censor(self, email):
+        self.email = email
+        word_count = len(self.censor_txt)
+        while word_count > 0:
+            indexs = []
+            for i in range(len(email)):
+                if email[i] == self.censor_txt[0]:
+                    indexs.append(i)
+            print(indexs)
+            word_count = 0
+
 
 
 email_one = Email("email_one.txt")
-email_one.to_list()
 
 censor_txt1 = Censor("learning algorithms")
+censor_txt1.to_censor(email_one.to_list())
