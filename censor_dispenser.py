@@ -6,7 +6,7 @@
 
 #====To do:====
 #Create functionality that can censor all words from a list.
-#proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
+proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
 
 class Email:
 #.__init__ opens text file using self.file variable
@@ -19,16 +19,35 @@ class Email:
         email_string += self.email
         return email_string
 
+#Censors with individual string as input
 class Censor:
     def __init__(self, censor_txt):
         self.censor_txt = censor_txt
 
     def to_censor(self, email):
-        censor_string = email.to_string()
-        print(censor_string.replace(self.censor_txt, "**********"))
+        email_string = email.to_string()
+        print(email_string.replace(self.censor_txt, "**********"))
 
+#Censors with list of strings as input
+class MultiCensor:
+    def __init__(self, censor_list):
+        self.censor_list = censor_list
+
+    def list_censor(self, email):
+        email_string = email.to_string()
+        for string in self.censor_list:
+            email_string = email_string.replace(string, "************")
+        print(email_string)
 
 email_one = Email("email_one.txt")
-censor_txt1 = Censor("learning algorithms")
-
-censor_txt1.to_censor(email_one)
+email_two = Email("email_two.txt")
+email_three = Email("email_three.txt")
+email_four = Email("email_four.txt")
+proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithms", "her", "herself"]
+#censor_txt1 = Censor("learning algorithms")
+#censor_txt1.to_censor(email_one)
+censor_string1 = MultiCensor(proprietary_terms)
+censor_string1.list_censor(email_one)
+censor_string1.list_censor(email_two)
+censor_string1.list_censor(email_three)
+censor_string1.list_censor(email_four)
