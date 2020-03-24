@@ -25,21 +25,22 @@ class Email:
         email_list1 = [word for word in self.email.split(" ")]
         email_list2 = []
         email_list3 = []
-        email_list4 = []
-        email_list5 = []
+#        email_list4 = []
+#        email_list5 = []
         for element in email_list1:
-            new_str = element.splitlines(keepends=True)
-            email_list2.append(new_str)
+            p_split = re.findall(r"[\w]+|[().,?!\n]", element)
+#            new_str = element.splitlines(keepends=True)
+            email_list2.append(p_split)
         for element in email_list2:
             for sub in element:
                 email_list3.append(sub)
-        for element in email_list3:
-            p_split = re.findall(r"[\w]+|[.,?!\n]", element)
-            email_list4.append(p_split)
-        for element in email_list4:
-            for sub in element:
-                email_list5.append(sub)
-        return email_list5
+#        for element in email_list3:
+#            p_split = re.findall(r"[\w]+|[.,?!\n]", element)
+#            email_list4.append(p_split)
+#        for element in email_list4:
+#            for sub in element:
+#                email_list5.append(sub)
+        return email_list3
 
 #Censors with individual string as input
 class Censor:
