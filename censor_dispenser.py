@@ -6,6 +6,7 @@
 
 #====To do:====
 #Using the list of "negative" words. Censor all occurances of "negative" words after any of the words in the "negative_words" list has been used twice.  Also censor using the "proprietary_terms" list.
+import re
 
 class Email:
 #.__init__ opens text file using self.file variable
@@ -19,18 +20,26 @@ class Email:
         email_string += self.email
         return email_string
 
-# Converts email to list of each word if needed
+# Converts email to list of each word
     def to_list(self):
         email_list1 = [word for word in self.email.split(" ")]
         email_list2 = []
         email_list3 = []
+        email_list4 = []
+        email_list5 = []
         for element in email_list1:
             new_str = element.splitlines(keepends=True)
             email_list2.append(new_str)
         for element in email_list2:
             for sub in element:
                 email_list3.append(sub)
-        return email_list3
+        for element in email_list3:
+            p_split = re.findall(r"[\w]+|[.,?!\n]", element)
+            email_list4.append(p_split)
+        for element in email_list4:
+            for sub in element:
+                email_list5.append(sub)
+        return email_list5
 
 #Censors with individual string as input
 class Censor:
@@ -63,25 +72,23 @@ class MultiCensor:
         delay = 2
         for word in email_list:
             if delay > 0:
-                #print("Checking if " + str(word).lower() + " in censor_list")
-                if word.lower() in self.censor_list:
+                if word in self.censor_list:
                     delay -= 1
                     skipped_words.append(word)
-                new_email.append(word)
-            elif delay == 0:
-                if str(word).lower() in self.censor_list:
-                    new_email.append("***********")
-                    censored_words.append(word)
-                elif str(word).lower() not in self.censor_list:
                     new_email.append(word)
-        print("Skipped the words: " + str(skipped_words))
-        print("Censored the words: " + str(censored_words))
-        print(new_email)
+                else:
+                    new_email.append(word)
+            else:
+                if word in self.censor_list:
+                    censored_words.append(word)
+                    new_email.append("***********")
+                else:
+                    new_email.append(word)
 
+#        print("Skipped the words: " + str(skipped_words))
+#        print("Censored the words: " + str(censored_words))
+#        print(new_email)
 
-
-        #final_email = email_string
-        #print(final_email)
 
 email_one = Email("email_one.txt")
 email_two = Email("email_two.txt")
@@ -92,7 +99,7 @@ negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "ala
 censor_list1 = MultiCensor(negative_words)
 censor_list1.delayed_censor(email_three)
 
-#email_three.to_list()
+print(email_three.to_list())
 
 #censor_txt1 = Censor("learning algorithms")
 #censor_txt1.to_censor(email_one)
