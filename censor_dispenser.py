@@ -20,7 +20,7 @@ class Email:
         email_string += self.email
         return email_string
 
-# Converts email to list of each word
+# Converts email to list of each word, \n and puntuation
     def to_list(self):
         email_list1 = [word for word in self.email.split(" ")]
         email_list2 = []
@@ -57,29 +57,31 @@ class MultiCensor:
 #Censors words taken from list of strings but misses the first x occurances of a word
     def delayed_censor(self, email):
         email_list = email.to_list()
-        #print("Censoring " + str(email_list))
-        new_email = []
-        censored_words = []
+        new_email_list = []
         skipped_words = []
+        censored_words = []
         delay = 2
         for word in email_list:
             if delay > 0:
-                if word in self.censor_list:
+                if word.lower() in self.censor_list:
                     delay -= 1
                     skipped_words.append(word)
-                    new_email.append(word)
+                    new_email_list.append(word)
                 else:
-                    new_email.append(word)
-            else:
-                if word in self.censor_list:
+                    new_email_list.append(word)
+            elif delay == 0:
+                if word.lower() in self.censor_list:
                     censored_words.append(word)
-                    new_email.append("***********")
+                    new_email_list.append("***********")
                 else:
-                    new_email.append(word)
-
+                    new_email_list.append(word)
+        new_email = " ".join(new_email_list).replace(" .", ".").replace(" ,", ",").replace(" !", "!").replace(" ?", "?").replace("\n ", "\n")
+        print(new_email)
+#Uncomment to show words being skipped:
 #        print("Skipped the words: " + str(skipped_words))
-#        print("Censored the words: " + str(censored_words))
-#        print(new_email)
+#Uncomment to show words that have been censored:
+#       print("Censored the words: " + str(censored_words))
+
 
 
 email_one = Email("email_one.txt")
@@ -87,15 +89,18 @@ email_two = Email("email_two.txt")
 email_three = Email("email_three.txt")
 email_four = Email("email_four.txt")
 
+#calls comparing email_three before and efter censoring
 negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help", "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed", "distressed", "concerning", "horrible", "horribly", "questionable"]
-censor_list1 = MultiCensor(negative_words)
-censor_list1.delayed_censor(email_three)
+censor_list2 = MultiCensor(negative_words)
+censor_list2.delayed_censor(email_three)
+#Uncomment to compare to original email: print(email_three.to_string())
 
-print(email_three.to_list())
 
-#censor_txt1 = Censor("learning algorithms")
-#censor_txt1.to_censor(email_one)
-
+#Calls for email_two which is censored using a list of multip
 #proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithms", "her", "herself"]
 #censor_list1 = MultiCensor(proprietary_terms)
 #censor_list1.list_censor(email_two)
+
+#Calls for email_one
+#censor_txt1 = Censor("learning algorithms")
+#censor_txt1.to_censor(email_one)
